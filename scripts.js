@@ -38,6 +38,30 @@ const matrices = {
     ]
 };
 
+let boardWidth = 10;
+let boardHeight = 20;
+
+// initBoard(canvas, boardHeight, boardWidth)
+
+function getMatrixActualSize(matrix) {
+    let height = 0;
+    let width = 0;
+
+    for (let row = 0; row < matrix.length; row++) {
+        if (matrix[row].some(value => value !== 0)) {
+            height++;
+        }
+    }
+
+    for (let col = 0; col < matrix[0].length; col++) {
+        if (matrix.some(row => row[col] !== 0)) {
+            width++;
+        }
+    }
+
+    return { height: height, width: width };
+}
+
 function rotate(matrix) {
     let rotatedMatrix = Array(matrix[0].length).fill(null).map(() => []);
     for (let i = 0; i < matrix.length; i++) {
@@ -48,7 +72,23 @@ function rotate(matrix) {
     return rotatedMatrix;
 }
 
+function initBoard(canvas, xLength, yLength) {
+    for (let x = 0; x < xLength; x++) {
+        const rowElement = document.createElement('div');
+        rowElement.classList.add('row');
+        for (let y = 0; y < yLength; y++) {
+            const cellElement = document.createElement('div');
+            cellElement.classList.add("cell");
+            rowElement.appendChild(cellElement);
+        }
+        canvas.appendChild(rowElement);
+    }
+}
+
 module.exports = {
     matrices,
-    rotate
+    rotate,
+    initBoard,
+    getMatrixActualSize
 }
+

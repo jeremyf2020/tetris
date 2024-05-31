@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-const { rotate, matrices } = require('./scripts'); // Adjust the import according to your file structure
+const { rotate, matrices, initBoard, getMatrixActualSize } = require('./scripts'); // Adjust the import according to your file structure
 
 function testRotation(shape, expectedMatrix) {
     test(`the ${shape} tetromino should be correctly rotated`, () => {
@@ -91,3 +91,59 @@ describe('Rotations', () => {
 
 });
 
+describe('initBoard function', () => {
+    let canvas;
+
+    beforeEach(() => {
+        document.body.innerHTML = '<div id="canvas"></div>';
+        canvas = document.querySelector('#canvas');
+    });
+
+    test('should create the correct number of rows and cells', () => {
+        const xLength = 5;
+        const yLength = 3;
+
+        initBoard(canvas, xLength, yLength);
+
+        // Check if the number of rows is correct
+        const rows = canvas.getElementsByClassName('row');
+        expect(rows.length).toBe(xLength);
+
+        // Check if the number of cells in each row is correct
+        for (const row of rows) {
+            const cells = row.getElementsByClassName('cell');
+            expect(cells.length).toBe(yLength);
+        }
+    });
+});
+
+describe('matrix valid size', () => {
+
+    test('actual size of I', () => {
+        const size = getMatrixActualSize(matrices["I"]);
+        expect(size).toEqual({ height: 1, width: 4 })
+    })
+
+    test('actual size of I', () => {
+        const size = getMatrixActualSize(matrices["J"]);
+        expect(size).toEqual({ height: 2, width: 3 })
+    })
+
+    test('actual size of O', () => {
+        const size = getMatrixActualSize(matrices["O"]);
+        expect(size).toEqual({ height: 2, width: 2 })
+    })
+    test('actual size of Z', () => {
+        const size = getMatrixActualSize(matrices["Z"]);
+        expect(size).toEqual({ height: 2, width: 3 })
+    })
+
+    test('actual size of rotated I', () => {
+        const matrix = matrices["I"];
+        const rotatedMatrix = rotate(matrix);
+        const size = getMatrixActualSize(rotatedMatrix);
+        expect(size).toEqual({ height: 4, width: 1 })
+    })
+
+
+});
