@@ -1,6 +1,5 @@
-const canvas = document.querySelector('#canvas');
 
-const matrices = {
+export const matrices = {
     "I": [
         [0, 0, 0, 0],
         [1, 1, 1, 1],
@@ -38,12 +37,8 @@ const matrices = {
     ]
 };
 
-let boardWidth = 10;
-let boardHeight = 20;
 
-// initBoard(canvas, boardHeight, boardWidth)
-
-function getMatrixActualSize(matrix) {
+export function getMatrixActualSize(matrix) {
     let height = 0;
     let width = 0;
 
@@ -62,7 +57,7 @@ function getMatrixActualSize(matrix) {
     return { height: height, width: width };
 }
 
-function rotate(matrix) {
+export function rotate(matrix) {
     let rotatedMatrix = Array(matrix[0].length).fill(null).map(() => []);
     for (let i = 0; i < matrix.length; i++) {
         for (let j = matrix[0].length - 1; j >= 0; j--) {
@@ -72,7 +67,7 @@ function rotate(matrix) {
     return rotatedMatrix;
 }
 
-function initBoard(canvas, xLength, yLength) {
+export function initBoard(canvas, xLength, yLength) {
     for (let x = 0; x < xLength; x++) {
         const rowElement = document.createElement('div');
         rowElement.classList.add('row');
@@ -85,10 +80,10 @@ function initBoard(canvas, xLength, yLength) {
     }
 }
 
-module.exports = {
-    matrices,
-    rotate,
-    initBoard,
-    getMatrixActualSize
-}
+// module.exports = {
+//     matrices,
+//     rotate,
+//     initBoard,
+//     getMatrixActualSize
+// }
 

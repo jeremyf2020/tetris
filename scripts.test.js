@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-const { rotate, matrices, initBoard, getMatrixActualSize } = require('./scripts'); // Adjust the import according to your file structure
+import { rotate, matrices, initBoard, getMatrixActualSize } from './scripts.js';
 
 function testRotation(shape, expectedMatrix) {
     test(`the ${shape} tetromino should be correctly rotated`, () => {
