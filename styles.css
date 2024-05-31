@@ -1,0 +1,38 @@
+#canvas {
+  display: block;
+  flex-wrap: nowrap;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cell {
+  height: 20px;
+  width: 20px;
+  background-color: lightgray;
+  margin: 1px;
+}
+
+.cell.I {
+  background-color: cyan;
+}
+.cell.J {
+  background-color: blue;
+}
+.cell.L {
+  background-color: orange;
+}
+.cell.O {
+  background-color: yellow;
+}
+.cell.S {
+  background-color: green;
+}
+.cell.Z {
+  background-color: red;
+}
+.cell.T {
+  background-color: purple;
+}
