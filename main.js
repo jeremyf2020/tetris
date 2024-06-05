@@ -19,9 +19,7 @@ let speedControl = {
 }
 
 updateTetriminos('add', 'current', currentTetrominoe);
-
-setInterval(moveDown(1), 1000);
-
+setInterval(() => moveDown(1), speedControl.speed);
 
 document.addEventListener("keydown", (e) => {
     switch (e.key) {
@@ -57,44 +55,69 @@ function moveDown(deltaY) {
         ...currentTetrominoe,
         y: currentTetrominoe.y + deltaY
     }
-    // console.log(newTetrominoe)
 
-    applyTetrominoUpdate(newTetrominoe)
+    applyTetrominoUpdate(newTetrominoe);
+    // setTimeout(() => changeStatusOfBlocks(), 1000)
+    // [TODO]
+
+    // const collised = checkCollision(currentTetrominoe);
+    // if (collised) {
+    //     setTimeout(() => changeStatusOfBlocks(), 1000)
+    //     // changeStatusOfBlocks()
+    // }
+}
+
+function changeStatusOfBlocks() {
     const collised = checkCollision(currentTetrominoe);
-    console.log(collised)
     if (collised) {
+
         document.querySelectorAll('.current').forEach((collidedCell) => {
             collidedCell.classList.replace('current', 'occupied');
         });
         currentTetrominoe = createTetromino(matrices, boardWidth);
+        // removeFilledRows();
         const removedRows = checkFilledRows();
         const score = calculateScore(removedRows, speedControl.level)
+        document.querySelector('#score').innerHTML = Number(document.querySelector('#score').innerHTML) + score;
         speedControl.clearedRows += removedRows;
         speedControl.level = Math.floor(speedControl.clearedRows / 10);
-        speedControl.speed = speedControl.level < 10 ? 1000 - speedControl.level(100) : 100 - speedControl.level;
+        speedControl.speed = speedControl.level < 10 ? 1000 - speedControl.level * 100 : 100 - speedControl.level;
 
-        document.querySelector('#score').innerHTML = Number(document.querySelector('#score').innerHTML) + score;
         updateTetriminos('add', 'current', currentTetrominoe);
     }
 }
 
+// function removeFilledRows() {
+//     const removedRows = checkFilledRows();
+//     const score = calculateScore(removedRows, speedControl.level)
+//     document.querySelector('#score').innerHTML = Number(document.querySelector('#score').innerHTML) + score;
+//     speedControl.clearedRows += removedRows;
+//     speedControl.level = Math.floor(speedControl.clearedRows / 10);
+//     speedControl.speed = speedControl.level < 10 ? 1000 - speedControl.level * 100 : 100 - speedControl.level;
+
+//     updateTetriminos('add', 'current', currentTetrominoe);
+
+// }
+
 function calculateScore(rows, level) {
-    let baseScore;
+    let baseScore = 0;
 
     if (rows === 1) {
-        baseScore == 40
+        baseScore = 40
     }
     else if (rows === 2) {
-        baseScore == 100
+        baseScore = 100
     }
     else if (rows === 3) {
-        baseScore == 300
+        baseScore = 300
     }
-    else if (rows === 2) {
-        baseScore == 1200
+    else if (rows === 4) {
+        baseScore = 1200
     }
+    console.log(baseScore)
+    console.log(level)
 
-    let result = baseScore * level;
+    let result = baseScore * (level + 1);
     return result;
 
 }
@@ -250,3 +273,6 @@ function createTetromino(matrices, boardWidth) {
     };
 }
 
+function gameOver() {
+    // alert("Game Over");
+}
