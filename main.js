@@ -11,12 +11,16 @@ initBoard(canvas, boardHeight, boardWidth)
 let currentTetrominoe = createTetromino(matrices, boardWidth);
 
 let speedControl = {
+    level: 1,
+    clearedRows: 0,
     timer: 0,
     speed: 1000,
     lastTime: 0
 }
 
 updateTetriminos('add', 'current', currentTetrominoe);
+
+setInterval(moveDown(1), 1000);
 
 
 document.addEventListener("keydown", (e) => {
@@ -63,9 +67,35 @@ function moveDown(deltaY) {
             collidedCell.classList.replace('current', 'occupied');
         });
         currentTetrominoe = createTetromino(matrices, boardWidth);
+        const removedRows = checkFilledRows();
+        const score = calculateScore(removedRows, speedControl.level)
+        speedControl.clearedRows += removedRows;
+        speedControl.level = Math.floor(speedControl.clearedRows / 10);
+        speedControl.speed = speedControl.level < 10 ? 1000 - speedControl.level(100) : 100 - speedControl.level;
+
+        document.querySelector('#score').innerHTML = Number(document.querySelector('#score').innerHTML) + score;
         updateTetriminos('add', 'current', currentTetrominoe);
     }
+}
 
+function calculateScore(rows, level) {
+    let baseScore;
+
+    if (rows === 1) {
+        baseScore == 40
+    }
+    else if (rows === 2) {
+        baseScore == 100
+    }
+    else if (rows === 3) {
+        baseScore == 300
+    }
+    else if (rows === 2) {
+        baseScore == 1200
+    }
+
+    let result = baseScore * level;
+    return result;
 
 }
 
@@ -89,7 +119,8 @@ function applyTetrominoUpdate(newTetrominoe) {
     updateTetriminos('add', 'current', currentTetrominoe);
 }
 
-function checkCollision(tetrominoe, board = canvas) {
+function checkCollision(tetrominoe) {
+    const board = document.querySelector('#canvas')
     const { matrix, x, y } = tetrominoe;
 
     for (let rowId = 0; rowId < matrix.length; rowId++) {
@@ -110,22 +141,61 @@ function checkCollision(tetrominoe, board = canvas) {
                     return true;
                 }
                 if ((newY < board.children.length
-
                     && board.children[newY].children[newX].classList.contains('current')
                     && board.children[newY + 1].children[newX].classList.contains('occupied'))
                 ) {
+                    if (newY <= 0) {
+                        gameOver();
+                        return;
+                    }
                     return true;
                 }
             }
         }
     }
     return false;
+}
 
+function checkFilledRows() {
+    const board = document.querySelector('#canvas')
+    console.log('enter checkFilledRows funcC')
+    let removeRows = 0;
+    for (let rowId = 0; rowId < board.children.length; rowId++) {
+        let rowChecker = 0;
+        for (let cellId = 0; cellId < board.children[rowId].children.length; cellId++) {
+            if (board.children[rowId].children[cellId].classList.contains('occupied')) {
+                rowChecker++
+            }
+        }
+        if (rowChecker == board.children[rowId].children.length) {
+            console.log(rowId + ' is remove')
+            board.children[rowId].remove();
+            removeRows++;
+            rowId--;
+        }
+    }
+    let newRows = document.createDocumentFragment();
+    for (let r = 0; r < removeRows; r++) {
+        const rowElement = document.createElement('div');
+        rowElement.classList.add('row');
+        for (let c = 0; c < board.children[0].children.length; c++) {
+            const cellElement = document.createElement('div');
+            cellElement.className = "cell empty";
+            rowElement.appendChild(cellElement);
+        }
+        newRows.appendChild(rowElement);
+    }
+    // console.log(newRows)
+    board.insertBefore(newRows, board.firstChild);
+    return removeRows;
 }
 
 
-function updateTetriminos(action, status, tetrominoe, board = canvas) {
+
+
+function updateTetriminos(action, status, tetrominoe) {
     const { key, matrix, x, y } = tetrominoe;
+    const board = document.querySelector('#canvas')
 
     matrix.forEach((row, rowId) => {
         row.forEach((cell, cellId) => {
@@ -135,13 +205,17 @@ function updateTetriminos(action, status, tetrominoe, board = canvas) {
                 }
                 board.children[y + rowId].children[x + cellId].classList[action](key);
                 board.children[y + rowId].children[x + cellId].classList[action](status);
+                if (action == 'remove') {
+                    board.children[y + rowId].children[x + cellId].classList.add('empty');
+                }
             }
         })
     })
 }
 
-function isValidMove(tetrominoe, board = canvas) {
+function isValidMove(tetrominoe) {
     const { matrix, x, y } = tetrominoe;
+    const board = document.querySelector('#canvas')
 
     for (let rowId = 0; rowId < matrix.length; rowId++) {
         for (let cellId = 0; cellId < matrix[rowId].length; cellId++) {
