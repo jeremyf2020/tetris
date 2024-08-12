@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { rotate, matrices, initBoard, getMatrixActualSize } from './scripts.js';
+import { rotate, matrices, initBoard, getMatrixActualSize } from './boardFactory.js';
 
 function testRotation(shape, expectedMatrix) {
     test(`the ${shape} tetromino should be correctly rotated`, () => {

@@ -1,4 +1,3 @@
-
 export const matrices = {
     "I": [
         [0, 0, 0, 0],
@@ -79,11 +78,4 @@ export function initBoard(canvas, xLength, yLength) {
         canvas.appendChild(rowElement);
     }
 }
-
-// module.exports = {
-//     matrices,
-//     rotate,
-//     initBoard,
-//     getMatrixActualSize
-// }
 

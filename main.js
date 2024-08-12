@@ -1,4 +1,4 @@
-import { initBoard, matrices, getMatrixActualSize, rotateMatrix } from "./scripts.js";
+import { initBoard, matrices, getMatrixActualSize, rotateMatrix } from "./boardFactory.js";
 
 const canvas = document.querySelector('#canvas');
 
@@ -10,16 +10,17 @@ initBoard(canvas, boardHeight, boardWidth)
 // initialize first tetrominoes
 let currentTetrominoe = createTetromino(matrices, boardWidth);
 
+
+updateTetriminos('add', 'current', currentTetrominoe);
 let speedControl = {
     level: 1,
     clearedRows: 0,
-    timer: 0,
+    timer: Date.now(),
     speed: 1000,
-    lastTime: 0
+    lastTime: Date.now()
 }
 
-updateTetriminos('add', 'current', currentTetrominoe);
-setInterval(() => moveDown(1), speedControl.speed);
+let drop = setInterval(() => moveDown(1), speedControl.speed);
 
 document.addEventListener("keydown", (e) => {
     switch (e.key) {
@@ -44,30 +45,18 @@ function moveHorizontal(deltaX) {
         ...currentTetrominoe,
         x: currentTetrominoe.x + deltaX
     }
-
     applyTetrominoUpdate(newTetrominoe)
-
 }
 
 function moveDown(deltaY) {
+    const remainingSec = (Date.now() - speedControl.lastTime);
+    // clearInterval(drop);
 
     const newTetrominoe = {
         ...currentTetrominoe,
         y: currentTetrominoe.y + deltaY
     }
 
-    applyTetrominoUpdate(newTetrominoe);
-    // setTimeout(() => changeStatusOfBlocks(), 1000)
-    // [TODO]
-
-    // const collised = checkCollision(currentTetrominoe);
-    // if (collised) {
-    //     setTimeout(() => changeStatusOfBlocks(), 1000)
-    //     // changeStatusOfBlocks()
-    // }
-}
-
-function changeStatusOfBlocks() {
     const collised = checkCollision(currentTetrominoe);
     if (collised) {
 
@@ -75,7 +64,6 @@ function changeStatusOfBlocks() {
             collidedCell.classList.replace('current', 'occupied');
         });
         currentTetrominoe = createTetromino(matrices, boardWidth);
-        // removeFilledRows();
         const removedRows = checkFilledRows();
         const score = calculateScore(removedRows, speedControl.level)
         document.querySelector('#score').innerHTML = Number(document.querySelector('#score').innerHTML) + score;
@@ -85,19 +73,12 @@ function changeStatusOfBlocks() {
 
         updateTetriminos('add', 'current', currentTetrominoe);
     }
+    applyTetrominoUpdate(newTetrominoe)
+
+
 }
 
-// function removeFilledRows() {
-//     const removedRows = checkFilledRows();
-//     const score = calculateScore(removedRows, speedControl.level)
-//     document.querySelector('#score').innerHTML = Number(document.querySelector('#score').innerHTML) + score;
-//     speedControl.clearedRows += removedRows;
-//     speedControl.level = Math.floor(speedControl.clearedRows / 10);
-//     speedControl.speed = speedControl.level < 10 ? 1000 - speedControl.level * 100 : 100 - speedControl.level;
 
-//     updateTetriminos('add', 'current', currentTetrominoe);
-
-// }
 
 function calculateScore(rows, level) {
     let baseScore = 0;
@@ -114,8 +95,8 @@ function calculateScore(rows, level) {
     else if (rows === 4) {
         baseScore = 1200
     }
-    console.log(baseScore)
-    console.log(level)
+    // console.log(baseScore)
+    // console.log(level)
 
     let result = baseScore * (level + 1);
     return result;
@@ -181,7 +162,7 @@ function checkCollision(tetrominoe) {
 
 function checkFilledRows() {
     const board = document.querySelector('#canvas')
-    console.log('enter checkFilledRows funcC')
+    // console.log('enter checkFilledRows funcC')
     let removeRows = 0;
     for (let rowId = 0; rowId < board.children.length; rowId++) {
         let rowChecker = 0;
@@ -191,7 +172,7 @@ function checkFilledRows() {
             }
         }
         if (rowChecker == board.children[rowId].children.length) {
-            console.log(rowId + ' is remove')
+            // console.log(rowId + ' is remove')
             board.children[rowId].remove();
             removeRows++;
             rowId--;
