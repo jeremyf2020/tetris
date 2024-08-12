@@ -1,17 +1,19 @@
 import { initBoard, matrices, getMatrixActualSize, rotateMatrix } from "./boardFactory.js";
 
 const canvas = document.querySelector('#canvas');
+const nextBoard = document.querySelector('#next-tetrominoe')
 
 let boardWidth = 10;
 let boardHeight = 20;
 
 initBoard(canvas, boardHeight, boardWidth)
+initBoard(nextBoard, 6, 6)
 
 // initialize first tetrominoes
 let currentTetrominoe = createTetromino(matrices, boardWidth);
 
-
 updateTetriminos('add', 'current', currentTetrominoe);
+updateNextBoard('add', 'current', currentTetrominoe)
 
 
 let speedControl = {
@@ -260,4 +262,25 @@ function createTetromino(matrices, boardWidth) {
 
 function gameOver() {
     // alert("Game Over");
+}
+
+function updateNextBoard(action, status, tetrominoe) {
+    const { key, matrix, x, y } = tetrominoe;
+    const board = document.querySelector('#next-tetrominoe')
+
+    matrix.forEach((row, rowId) => {
+        row.forEach((cell, cellId) => {
+            if (cell !== 0) {
+                if (board.children[y + rowId].children[x + cellId].classList.contains('empty')) {
+                    board.children[y + rowId].children[x + cellId].classList.remove('empty');
+                }
+                board.children[y + rowId].children[x + cellId].classList[action](key);
+                board.children[y + rowId].children[x + cellId].classList[action](status);
+                if (action == 'remove') {
+                    board.children[y + rowId].children[x + cellId].classList.add('empty');
+                }
+            }
+        })
+    })
+
 }

@@ -70,3 +70,18 @@ body {
 p {
   margin: 0;
 }
+
+#next-tetrominoe {
+  background-color: #fff; /* Or any color you prefer */
+  padding: 0; /* Remove padding */
+  text-align: center; /* Center align text or elements inside */
+  font-size: 14px; /* Set a specific font size */
+  margin: 0;
+  width: 120px; /* Set specific width if needed */
+  height: 120px; /* Set specific height if needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px; /* Add or remove border-radius */
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Adjust box shadow */
+}
