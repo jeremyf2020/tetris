@@ -1,0 +1,52 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 5vh;
+}
+
+#side-board {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: var(--size-board-width);
+  padding: 0.5rem;
+  background-color: #f3f3f3e0;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-left: 5px;
+}
+
+#side-board div {
+  margin: 10px 0;
+  padding: 5px;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+}
+
+p {
+  margin: 0;
+}
+
+#next-tetrominoe {
+  background-color: #fff; /* Or any color you prefer */
+  padding: 0; /* Remove padding */
+  text-align: center; /* Center align text or elements inside */
+  font-size: 14px; /* Set a specific font size */
+  margin: 0;
+  width: 120px; /* Set specific width if needed */
+  height: 120px; /* Set specific height if needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px; /* Add or remove border-radius */
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Adjust box shadow */
+}
+
+#modal {
+  display: none;
+}
