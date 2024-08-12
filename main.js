@@ -12,6 +12,8 @@ let currentTetrominoe = createTetromino(matrices, boardWidth);
 
 
 updateTetriminos('add', 'current', currentTetrominoe);
+
+
 let speedControl = {
     level: 1,
     clearedRows: 0,
@@ -65,10 +67,12 @@ function moveDown(deltaY) {
         });
         currentTetrominoe = createTetromino(matrices, boardWidth);
         const removedRows = checkFilledRows();
+        document.querySelector('#lines').innerHTML = Number(document.querySelector('#lines').innerHTML) + removedRows;
         const score = calculateScore(removedRows, speedControl.level)
         document.querySelector('#score').innerHTML = Number(document.querySelector('#score').innerHTML) + score;
         speedControl.clearedRows += removedRows;
         speedControl.level = Math.floor(speedControl.clearedRows / 10);
+        document.querySelector('#level').innerHTML = Number(speedControl.level);
         speedControl.speed = speedControl.level < 10 ? 1000 - speedControl.level * 100 : 100 - speedControl.level;
 
         updateTetriminos('add', 'current', currentTetrominoe);
