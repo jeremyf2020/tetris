@@ -1,5 +1,3 @@
-
-
 export function initBoard(canvas, xLength, yLength) {
     for (let x = 0; x < xLength; x++) {
         const rowElement = document.createElement('div');
@@ -13,7 +11,7 @@ export function initBoard(canvas, xLength, yLength) {
     }
 }
 
-export function calculateBlockSize() {
+export function calculateAndResize() {
     const boardHeight = document.documentElement.clientHeight;
     const boardWidth = document.documentElement.clientWidth;
 
@@ -26,6 +24,6 @@ export function calculateBlockSize() {
 
     // Set the CSS variable
     document.documentElement.style.setProperty('--block-size', `${blockSize}px`);
-    document.documentElement.style.setProperty('--size-board-width', `${blockSize * 6}px`);
+    document.documentElement.style.setProperty('--side-board-width', `${blockSize * 6}px`);
 }
 

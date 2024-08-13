@@ -1,14 +1,18 @@
 :root {
-  --block-size: 20px; /* Default value */
-  --size-board-width: 30vw;
+  --block-size: 20px;
+  --side-board-width: 30vw;
 }
 
-#canvas {
+#game-board,
+#next-tetrominoe {
   display: block;
   flex-wrap: nowrap;
   position: relative;
-  margin-right: 10px;
+  margin-right: 1rem;
   width: fit-content;
+}
+#next-tetrominoe {
+  margin-left: 1rem;
 }
 
 .row {

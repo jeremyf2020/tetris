@@ -9,7 +9,7 @@ body {
 
 .container {
   display: flex;
-  align-items: flex-start; /* Aligns the items at the top */
+  align-items: flex-start;
 }
 
 #side-board {
@@ -26,7 +26,8 @@ body {
   padding: 0.1rem;
 }
 
-#side-board div {
+.status,
+#btns {
   margin: 10px 0;
   padding: 5px;
   width: 80%;
@@ -38,21 +39,6 @@ body {
 
 p {
   margin: 0;
-}
-
-#next-tetrominoe {
-  background-color: #fff; /* Or any color you prefer */
-  padding: 0; /* Remove padding */
-  text-align: center; /* Center align text or elements inside */
-  font-size: 14px; /* Set a specific font size */
-  margin: 0;
-  width: 120px; /* Set specific width if needed */
-  height: 120px; /* Set specific height if needed */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px; /* Add or remove border-radius */
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Adjust box shadow */
 }
 
 #modal {
