@@ -1,4 +1,4 @@
-import { initBoard, matrices, getMatrixActualSize, rotateMatrix } from "./boardFactory.js";
+import { initBoard, matrices, getMatrixActualSize, rotateMatrix } from "./oldboardFactory.js";
 
 const canvas = document.querySelector('#canvas');
 const nextBoard = document.querySelector('#next-tetrominoe')

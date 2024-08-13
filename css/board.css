@@ -1,6 +1,7 @@
 :root {
   --block-size: 20px;
-  --side-board-width: 30vw;
+  --next-board-size: 30vw;
+  --bg-color: #e0e0e0;
 }
 
 #game-board,
@@ -13,6 +14,17 @@
 }
 #next-tetrominoe {
   margin-left: 1rem;
+  width: var(--next-board-size);
+  height: var(--next-board-size);
+  display: flex; /* Enable Flexbox */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
+  flex-direction: column; /* Align rows vertically */
+  background-color: var(--bg-color);
+}
+
+#next-tetrominoe > .row > .cell.empty {
+  background-color: transparent; /* Make sure empty cells are transparent by default */
 }
 
 .row {

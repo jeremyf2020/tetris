@@ -24,6 +24,6 @@ export function calculateAndResize() {
 
     // Set the CSS variable
     document.documentElement.style.setProperty('--block-size', `${blockSize}px`);
-    document.documentElement.style.setProperty('--side-board-width', `${blockSize * 6}px`);
+    document.documentElement.style.setProperty('--next-board-size', `${blockSize * 6}px`);
 }
 
