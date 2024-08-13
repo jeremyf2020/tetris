@@ -10,31 +10,35 @@
 </head>
 
 <body>
-    <div id="canvas">
-        <div id="modal">
-            <div>Game Over</div>
+    <div class="container">
+
+        <div id="canvas">
+            <div id="modal">
+                <div>Game Over</div>
+            </div>
         </div>
-    </div>
-    <div id="side-board">
-        <div id="dark-mode-toggle">Dark-mode</div>
-        <div id="next-tetrominoe"></div>
-        <div>
-            <p>Score:</p>
-            <span id="score">0</span>
+        <div id="side-board">
+            <div id="dark-mode-toggle">Dark-mode</div>
+            <div id="next-tetrominoe"></div>
+            <div>
+                <p>Score:</p>
+                <span id="score">0</span>
+            </div>
+            <div>
+                <p>Level:</p>
+                <span id="level">0</span>
+            </div>
+            <div>
+                <p>Lines:</p>
+                <span id="lines">0</span>
+            </div>
+            <div id="btns">Stop</div>
         </div>
-        <div>
-            <p>Level:</p>
-            <span id="level">0</span>
-        </div>
-        <div>
-            <p>Lines:</p>
-            <span id="lines">0</span>
-        </div>
-        <div id="btns">Stop</div>
+
+        <script type="module" src="./js/main.js"></script>
+        <script type="module" src="./js/factory/board.js"></script>
     </div>
 
-    <script type="module" src="./js/main.js"></script>
-    <script type="module" src="./js/factory/board.js"></script>
 </body>
 
 </html>

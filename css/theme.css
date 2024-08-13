@@ -1,8 +1,15 @@
 body {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  margin-top: 5vh;
+  align-items: center;
+  margin: 20px auto 0 auto;
+  width: 100vw;
+  height: 95vh;
+}
+
+.container {
+  display: flex;
+  align-items: flex-start; /* Aligns the items at the top */
 }
 
 #side-board {
@@ -16,12 +23,13 @@ body {
   border-radius: 10px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   margin-left: 5px;
+  padding: 0.1rem;
 }
 
 #side-board div {
   margin: 10px 0;
   padding: 5px;
-  width: 100%;
+  width: 80%;
   text-align: center;
   font-size: 16px;
   background-color: #e0e0e0;

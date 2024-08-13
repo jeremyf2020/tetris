@@ -7,6 +7,8 @@
   display: block;
   flex-wrap: nowrap;
   position: relative;
+  margin-right: 10px;
+  width: fit-content;
 }
 
 .row {
@@ -18,7 +20,7 @@
   width: var(--block-size);
   height: var(--block-size);
   background-color: lightgray;
-  margin: 1px;
+  margin: 0.0625rem;
 }
 
 /* tetromino color */
