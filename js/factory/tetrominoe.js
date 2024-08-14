@@ -1,3 +1,4 @@
+
 export const matrices = {
     "I": [
         [0, 0, 0, 0],
@@ -79,4 +80,13 @@ export function updateTetriminos(action, status, tetrominoe, board, x, y) {
             }
         })
     })
+}
+
+export function applyTetrominoUpdate(newTetrominoe, currentTetrominoe, board, x, y) {
+    // if (!isValidMove(newTetrominoe)) {
+    //     return;
+    // }
+    updateTetriminos('remove', 'current', currentTetrominoe, board, x, y);
+    currentTetrominoe = newTetrominoe;
+    updateTetriminos('add', 'current', currentTetrominoe, board, x, y);
 }
