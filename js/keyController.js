@@ -1,10 +1,14 @@
-import { updateCurrentTetrominoe, currentTetrominoe, gameBoard, currentX, currentY } from "./main.js";
+import { currentTetrominoe, gameBoard, currentX, currentY } from "./main.js";
 import { applyTetrominoUpdate } from "./factory/tetrominoe.js";
 
-export function keyController(e) {
+export function keyController(e, callback) {
+    let newTetrominoe = currentTetrominoe;
+    let newX = currentX;
+    let newY = currentY;
+
     switch (e.key) {
         case "ArrowUp":
-            rotate();
+            newTetrominoe = rotate();
             break;
         // case "ArrowDown":
         //     moveDown(1);
@@ -15,7 +19,9 @@ export function keyController(e) {
         // case "ArrowRight":
         //     moveHorizontal(1);
         //     break;
+
     }
+    callback(newTetrominoe, newX, newY);
 }
 
 function rotate() {
@@ -28,7 +34,7 @@ function rotate() {
 
 
     applyTetrominoUpdate(rotatedTetrominoe, currentTetrominoe, gameBoard, currentX, currentY);
-    updateCurrentTetrominoe(rotatedTetrominoe);
+    return rotatedTetrominoe;
 }
 
 function rotateMatrix(matrix) {

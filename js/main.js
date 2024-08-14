@@ -22,8 +22,12 @@ updateTetriminos('add', 'current', currentTetrominoe, gameBoard, currentX, curre
 updateTetriminos('add', 'current', currentTetrominoe, nextBoard, 0, 0);
 adjustNextDisplay(nextBoard)
 
-document.addEventListener("keydown", (e) => { keyController(e) });
+document.addEventListener("keydown", (e) => {
+    keyController(e, (newTetrominoe, newX, newY) => {
+        // Update the state in main.js with the new values
+        currentTetrominoe = newTetrominoe
+        currentX = newX;
+        currentY = newY;
+    });
+});
 
-export function updateCurrentTetrominoe(newTetrominoe) {
-    currentTetrominoe = newTetrominoe;
-}
