@@ -69,6 +69,8 @@ export function updateTetriminos(action, status, tetrominoe, board, x, y) {
     matrix.forEach((row, rowId) => {
         row.forEach((cell, cellId) => {
             if (cell !== 0) {
+                // console.log("y + rowId: " + y + rowId)
+                // console.log("x + cellId: " + y + rowId)
                 if (board.children[y + rowId].children[x + cellId].classList.contains('empty')) {
                     board.children[y + rowId].children[x + cellId].classList.remove('empty');
                 }
@@ -82,11 +84,11 @@ export function updateTetriminos(action, status, tetrominoe, board, x, y) {
     })
 }
 
-export function applyTetrominoUpdate(newTetrominoe, currentTetrominoe, board, x, y) {
+export function applyTetrominoUpdate(newTetrominoe, currentTetrominoe, board, x, y, newX, newY) {
     // if (!isValidMove(newTetrominoe)) {
     //     return;
     // }
     updateTetriminos('remove', 'current', currentTetrominoe, board, x, y);
     currentTetrominoe = newTetrominoe;
-    updateTetriminos('add', 'current', currentTetrominoe, board, x, y);
+    updateTetriminos('add', 'current', currentTetrominoe, board, newX, newY);
 }

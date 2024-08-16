@@ -1,5 +1,6 @@
-import { currentTetrominoe, gameBoard, currentX, currentY } from "./main.js";
-import { applyTetrominoUpdate } from "./factory/tetrominoe.js";
+import { currentTetrominoe, gameBoard, currentX, currentY, boardWidth } from "./main.js";
+import { applyTetrominoUpdate, getMatrixActualSize } from "./factory/tetrominoe.js";
+import { checkLeft, checkOccupied, checkRight } from "./validation.js";
 
 export function keyController(e, callback) {
     let newTetrominoe = currentTetrominoe;
@@ -8,33 +9,43 @@ export function keyController(e, callback) {
 
     switch (e.key) {
         case "ArrowUp":
-            newTetrominoe = rotate();
+            [newTetrominoe, newX] = rotate();
             break;
         // case "ArrowDown":
         //     moveDown(1);
         //     break;
-        // case "ArrowLeft":
-        //     moveHorizontal(-1);
-        //     break;
-        // case "ArrowRight":
-        //     moveHorizontal(1);
-        //     break;
-
+        case "ArrowLeft":
+            newX = moveHorizontal(-1);
+            break;
+        case "ArrowRight":
+            newX = moveHorizontal(1);
+            break;
     }
     callback(newTetrominoe, newX, newY);
+    console.log(newTetrominoe)
 }
 
 function rotate() {
+    let newX = currentX;
     const rotatedTetrominoe = {
         ...currentTetrominoe,
         matrix: rotateMatrix(currentTetrominoe.matrix)
     };
+
     // check valid
+    if (!checkLeft(rotatedTetrominoe, newX)) {
+        newX = 0
+    }
+    if (!checkRight(rotatedTetrominoe, newX)) {
+        const { width } = getMatrixActualSize(rotatedTetrominoe.matrix);
+        newX = boardWidth - width;
+    }
+    if (!checkOccupied(rotatedTetrominoe, newX, currentY)) {
+        return [currentTetrominoe, currentX]
+    }
 
-
-
-    applyTetrominoUpdate(rotatedTetrominoe, currentTetrominoe, gameBoard, currentX, currentY);
-    return rotatedTetrominoe;
+    applyTetrominoUpdate(rotatedTetrominoe, currentTetrominoe, gameBoard, currentX, currentY, newX, currentY);
+    return [rotatedTetrominoe, newX];
 }
 
 function rotateMatrix(matrix) {
@@ -46,3 +57,14 @@ function rotateMatrix(matrix) {
     }
     return rotatedMatrix;
 }
+
+function moveHorizontal(deltaX) {
+    const newX = currentX + deltaX;
+    if (!checkLeft(currentTetrominoe, newX) || !checkRight(currentTetrominoe, newX)) {
+        return currentX
+    }
+
+    applyTetrominoUpdate(currentTetrominoe, currentTetrominoe, gameBoard, currentX, currentY, newX, currentY);
+    return newX
+}
+
