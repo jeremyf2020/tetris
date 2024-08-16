@@ -1,4 +1,5 @@
 export function initBoard(canvas, xLength, yLength) {
+    canvas.innerHTML = '';
     for (let x = 0; x < xLength; x++) {
         const rowElement = document.createElement('div');
         rowElement.classList.add('row');

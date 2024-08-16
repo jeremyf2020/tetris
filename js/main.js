@@ -13,13 +13,13 @@ window.addEventListener('resize', calculateAndResize);
 
 // create tetrominoe
 export let currentTetrominoe = createTetromino(); // initialize first tetrominoes
-let nextTetrminoe = currentTetrominoe;
+let nextTetrminoe = createTetromino();
 let currentSize = getMatrixActualSize(currentTetrominoe.matrix);
 currentX = Math.floor((boardWidth - currentSize.width) / 2);
 
 // place tetriminos on game board and next board
 updateTetriminos('add', 'current', currentTetrominoe, gameBoard, currentX, currentY);
-updateTetriminos('add', 'current', currentTetrominoe, nextBoard, 0, 0);
+updateTetriminos('add', 'current', nextTetrminoe, nextBoard, 0, 0);
 adjustNextDisplay(nextBoard)
 
 document.addEventListener("keydown", (e) => {
@@ -31,3 +31,18 @@ document.addEventListener("keydown", (e) => {
     });
 });
 
+export function swapToNextTetromino() {
+    currentTetrominoe = nextTetrminoe;
+    nextTetrminoe = createTetromino();
+    initBoard(nextBoard, 4, 4)
+    updateTetriminos('add', 'current', nextTetrminoe, nextBoard, 0, 0);
+    adjustNextDisplay(nextBoard);
+
+    let currentSize = getMatrixActualSize(currentTetrominoe.matrix);
+    currentX = Math.floor((boardWidth - currentSize.width) / 2);
+    currentY = 0;
+    updateTetriminos('add', 'current', currentTetrominoe, gameBoard, currentX, currentY);
+
+    return [currentTetrominoe, currentX, currentY]
+
+}
