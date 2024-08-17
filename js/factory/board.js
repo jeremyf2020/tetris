@@ -64,3 +64,34 @@ export function adjustNextDisplay(nextBoard) {
     }
 
 }
+
+export function checkFilledRows(board) {
+    let removeRows = 0;
+    for (let rowId = 0; rowId < board.children.length; rowId++) {
+        let rowChecker = 0;
+        for (let cellId = 0; cellId < board.children[rowId].children.length; cellId++) {
+            if (board.children[rowId].children[cellId].classList.contains('occupied')) {
+                rowChecker++
+            }
+        }
+        if (rowChecker == board.children[rowId].children.length) {
+            board.children[rowId].remove();
+            removeRows++;
+            rowId--;
+        }
+    }
+    let newRows = document.createDocumentFragment();
+    for (let r = 0; r < removeRows; r++) {
+        const rowElement = document.createElement('div');
+        rowElement.classList.add('row');
+        for (let c = 0; c < board.children[0].children.length; c++) {
+            const cellElement = document.createElement('div');
+            cellElement.className = "cell empty";
+            rowElement.appendChild(cellElement);
+        }
+        newRows.appendChild(rowElement);
+    }
+    board.insertBefore(newRows, board.firstChild);
+    return removeRows;
+}
+

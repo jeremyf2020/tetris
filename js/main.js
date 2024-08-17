@@ -2,6 +2,7 @@ import { calculateAndResize, initBoard, adjustNextDisplay } from "./factory/boar
 import { createTetromino, getMatrixActualSize, updateTetriminos } from "./factory/tetrominoe.js";
 import { keyController } from "./keyController.js";
 
+
 // Initiaize the gaming and side board
 export const gameBoard = document.querySelector('#game-board');
 const nextBoard = document.querySelector('#next-tetrominoe');
@@ -42,6 +43,7 @@ export function swapToNextTetromino() {
     currentX = Math.floor((boardWidth - currentSize.width) / 2);
     currentY = 0;
     updateTetriminos('add', 'current', currentTetrominoe, gameBoard, currentX, currentY);
+
 
     return [currentTetrominoe, currentX, currentY]
 

@@ -1,6 +1,8 @@
 import { currentTetrominoe, gameBoard, currentX, currentY, boardWidth, boardHeight, swapToNextTetromino } from "./main.js";
 import { applyTetrominoUpdate, getMatrixActualSize } from "./factory/tetrominoe.js";
 import { isInBottomEdge, isInLeftEdge, isOccupied, isInRightEdge } from "./validation.js";
+import { gameController } from "./gameController.js";
+import { checkFilledRows } from "./factory/board.js";
 
 export function keyController(e, callback) {
     let newTetrominoe = currentTetrominoe;
@@ -76,9 +78,15 @@ function moveDown(deltaY) {
 
     if (!isInBottomEdge(currentTetrominoe, newY) || isOccupied(currentTetrominoe, currentX, newY)) {
 
+        // lock the playing tetrominoe
         document.querySelectorAll('.current').forEach((collidedCell) => {
             collidedCell.classList.replace('current', 'occupied');
         });
+
+        // clear filled rows
+        const removedRows = checkFilledRows(gameBoard);
+        gameController.addRows(removedRows)
+
         const [newTetrominoe, newX, newY] = swapToNextTetromino();
         return [newTetrominoe, newX, newY];
     }

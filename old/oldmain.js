@@ -19,8 +19,8 @@ updateNextBoard('add', 'current', currentTetrominoe)
 let speedControl = {
     level: 1,
     clearedRows: 0,
-    timer: Date.now(),
     speed: 1000,
+    timer: Date.now(),
     lastTime: Date.now()
 }
 
@@ -168,7 +168,6 @@ function checkCollision(tetrominoe) {
 
 function checkFilledRows() {
     const board = document.querySelector('#canvas')
-    // console.log('enter checkFilledRows funcC')
     let removeRows = 0;
     for (let rowId = 0; rowId < board.children.length; rowId++) {
         let rowChecker = 0;
@@ -178,7 +177,6 @@ function checkFilledRows() {
             }
         }
         if (rowChecker == board.children[rowId].children.length) {
-            // console.log(rowId + ' is remove')
             board.children[rowId].remove();
             removeRows++;
             rowId--;
@@ -195,7 +193,6 @@ function checkFilledRows() {
         }
         newRows.appendChild(rowElement);
     }
-    // console.log(newRows)
     board.insertBefore(newRows, board.firstChild);
     return removeRows;
 }

@@ -38,16 +38,20 @@ class GameController {
     addRows(rows) {
         this.lines += rows;
         this.score += this.calcScore(rows);
+        this.updateScoreBoard();
+    }
+    updateScoreBoard() {
+        document.querySelector('#lines').innerHTML = this.lines;
+        document.querySelector('#level').innerHTML = this.level;
+        document.querySelector('#score').innerHTML = this.score;
     }
 
 }
 
-
-
 export const gameController = new GameController(0)
 
-export function updateScoreBoard(gameController) {
-    document.querySelector('#lines').innerHTML = gameController.lines;
-    document.querySelector('#level').innerHTML = gameController.level;
-    document.querySelector('#score').innerHTML = gameController.score;
-}
+// export function updateScoreBoard(gameController) {
+//     document.querySelector('#lines').innerHTML = gameController.lines;
+//     document.querySelector('#level').innerHTML = gameController.level;
+//     document.querySelector('#score').innerHTML = gameController.score;
+// }
