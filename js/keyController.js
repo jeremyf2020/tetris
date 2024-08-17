@@ -73,7 +73,7 @@ function moveHorizontal(deltaX) {
     return newX
 }
 
-function moveDown(deltaY) {
+export function moveDown(deltaY) {
     const newY = currentY + deltaY;
 
     if (!isInBottomEdge(currentTetrominoe, newY) || isOccupied(currentTetrominoe, currentX, newY)) {

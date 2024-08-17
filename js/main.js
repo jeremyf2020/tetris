@@ -1,6 +1,7 @@
 import { calculateAndResize, initBoard, adjustNextDisplay } from "./factory/board.js";
 import { createTetromino, getMatrixActualSize, updateTetriminos } from "./factory/tetrominoe.js";
-import { keyController } from "./keyController.js";
+import { keyController, moveDown } from "./keyController.js";
+import { gameController } from "./gameController.js";
 
 
 // Initiaize the gaming and side board
@@ -39,12 +40,37 @@ export function swapToNextTetromino() {
     updateTetriminos('add', 'current', nextTetrminoe, nextBoard, 0, 0);
     adjustNextDisplay(nextBoard);
 
+
     let currentSize = getMatrixActualSize(currentTetrominoe.matrix);
     currentX = Math.floor((boardWidth - currentSize.width) / 2);
     currentY = 0;
     updateTetriminos('add', 'current', currentTetrominoe, gameBoard, currentX, currentY);
-
-
     return [currentTetrominoe, currentX, currentY]
-
 }
+
+let gravity;
+
+function startGravity() {
+    gravity = setInterval(() => {
+        const [newTetrominoe, newX, newY] = moveDown(1);
+        // Update the global state with the new Tetromino position
+        currentTetrominoe = newTetrominoe;
+        currentX = newX;
+        currentY = newY;
+
+        // After moving down, check if the speed should be updated
+        updateGravity();
+    }, gameController.speed * 1000);
+}
+
+function updateGravity() {
+    // Clear the existing interval
+    clearInterval(gravity);
+
+    // Restart the gravity interval with the updated speed
+    startGravity();
+}
+
+// Start the initial gravity
+startGravity();
+
