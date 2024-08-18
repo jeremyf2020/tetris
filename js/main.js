@@ -50,7 +50,7 @@ export function swapToNextTetromino() {
 
 let gravity;
 
-function startGravity() {
+export function startGravity() {
     gravity = setInterval(() => {
         const [newTetrominoe, newX, newY] = moveDown(1);
         // Update the global state with the new Tetromino position
@@ -66,7 +66,6 @@ function startGravity() {
 function updateGravity() {
     // Clear the existing interval
     clearInterval(gravity);
-
     // Restart the gravity interval with the updated speed
     startGravity();
 }
@@ -74,3 +73,12 @@ function updateGravity() {
 // Start the initial gravity
 startGravity();
 
+document.querySelector('#stop-btn').addEventListener('click', (e) => {
+    if (e.target.innerHTML === "STOP") {
+        clearInterval(gravity);
+        e.target.innerHTML = "PLAY"
+    } else {
+        startGravity();
+        e.target.innerHTML = "STOP"
+    }
+})

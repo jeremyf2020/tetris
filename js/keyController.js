@@ -26,6 +26,7 @@ export function keyController(e, callback) {
     callback(newTetrominoe, newX, newY);
 }
 
+
 function rotate() {
     let newX = currentX;
     let newY = currentY;
