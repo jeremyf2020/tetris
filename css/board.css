@@ -52,6 +52,10 @@
   background-color: var(--bg-color);
 }
 
+#next-tetrominoe > .row > .cell.empty {
+  background-color: transparent;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;

@@ -1,4 +1,4 @@
-import { currentTetrominoe, gameBoard, currentX, currentY, boardWidth, boardHeight, swapToNextTetromino } from "./main.js";
+import { currentTetrominoe, gameBoard, currentX, currentY, boardWidth, boardHeight, swapToNextTetromino, gravity } from "./main.js";
 import { applyTetrominoUpdate, getMatrixActualSize } from "./factory/tetrominoe.js";
 import { isInBottomEdge, isInLeftEdge, isOccupied, isInRightEdge } from "./validation.js";
 import { gameController } from "./gameController.js";
@@ -77,8 +77,12 @@ function moveHorizontal(deltaX) {
 export function moveDown(deltaY) {
     const newY = currentY + deltaY;
 
-    if (!isInBottomEdge(currentTetrominoe, newY) || isOccupied(currentTetrominoe, currentX, newY)) {
+    if (newY === 1 && isOccupied(currentTetrominoe, currentX, newY)) {
+        document.querySelector(".modal").style.display = 'flex';
+        clearInterval(gravity);
+    }
 
+    if (!isInBottomEdge(currentTetrominoe, newY) || isOccupied(currentTetrominoe, currentX, newY)) {
         // lock the playing tetrominoe
         document.querySelectorAll('.current').forEach((collidedCell) => {
             collidedCell.classList.replace('current', 'occupied');

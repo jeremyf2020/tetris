@@ -48,7 +48,7 @@ export function swapToNextTetromino() {
     return [currentTetrominoe, currentX, currentY]
 }
 
-let gravity;
+export let gravity;
 
 export function startGravity() {
     gravity = setInterval(() => {
